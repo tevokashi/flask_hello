@@ -1,11 +1,18 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from os import environ 
+from os import environ
+import redis
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 db = SQLAlchemy(app)
 
+redis_url = environ.get('REDISTOGO_URL')
+try:
+    r = redis.from_url(redis_url)
+    redis_status = 'OK'
+except:
+    redis_status = 'Down'
 
 @app.errorhandler(404)
 def not_found(error=None):
@@ -18,23 +25,56 @@ def not_found(error=None):
     return resp
 
 def test_db():
+    """ Check database connection
+
+    Returns:
+        [string] -- database status
+    """    
     try:
         db.session.query("1").all()
         return 'OK'
-    except Exception as e:
+    except:
         return 'Down'
 
 @app.route('/')
 def index():
+    """Hello World
+    
+    Returns:
+        [string] -- Ola mundo
+    """    
     return "Ola mundo!"
+
+@app.route('/api/v1/enqueue')
+def funcname(parameter_list):
+    """Adiciona uma soma na fila 
+    
+    Arguments:
+        parameter_list {[type]} -- [description]
+    
+    Returns:
+        [type] -- [description]
+    """
+    if redis_status == 'OK':
+        return f"job enqueued{job.id}"
+    else:
+        return "Redis is down unable to enqueue your job"
 
 @app.route('/api/v1/status')
 def service_status():
+    """Check all api deps:
+    db-sql, redis and queue
+    
+    Returns:
+        [dict] -- API version, status of everyone of the deps
+    """    
     data = {}
     data['API'] = {}
     data['API']['api'] = "1.0"
     data['API']['dep'] ={}
     data['API']['dep']['db-sql'] = test_db()
+    data['API']['dep']['redis'] = redis_status
+    data.status_code = 200
     return jsonify(data)
     
 if __name__ == '__main__':
