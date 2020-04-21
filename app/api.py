@@ -74,7 +74,7 @@ def service_status():
     data['API']['dep'] ={}
     data['API']['dep']['db-sql'] = test_db()
     data['API']['dep']['redis'] = redis_status
-    rep = jsonify(data)
+    resp = jsonify(data)
     resp.status_code = 200
     return resp
     
