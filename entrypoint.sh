@@ -1,2 +1,2 @@
 #!/bin/bash
-flask run --host=0.0.0.0 --debug=False
+flask run --host=0.0.0.0 --debuger=False
