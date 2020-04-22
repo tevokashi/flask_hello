@@ -10,8 +10,8 @@ import worker
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 db = SQLAlchemy(app)
-
 redis_url = environ.get('REDISTOGO_URL')
+
 try:
     redis_conn = redis.from_url(redis_url)
     redis_status = 'OK'
@@ -54,7 +54,6 @@ def queue_size():
     else:
         queue_status = "OK"
     return queue_status
-
 
 @app.route('/')
 def index():
