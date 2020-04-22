@@ -3,6 +3,7 @@
 from os import environ
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from rq import Queue
 import redis
 import worker
 
@@ -12,7 +13,7 @@ db = SQLAlchemy(app)
 
 redis_url = environ.get('REDISTOGO_URL')
 try:
-    r = redis.from_url(redis_url)
+    redis_conn = redis.from_url(redis_url)
     redis_status = 'OK'
 except:
     redis_status = 'Down'
@@ -45,7 +46,13 @@ def queue_size():
     Returns:
         [string] -- status da fila
     """
-    queue_status = "OK"
+    soma = Queue(0, connection=redis_conn, default_timeout=3600)
+    subtracao = Queue(0, connection=redis_conn, default_timeout=3600)
+    total = len(soma.count) + len(subtracao.count)
+    if total >= 10:
+        queue_status = "Com fila"
+    else:
+        queue_status = "OK"
     return queue_status
 
 
@@ -92,6 +99,7 @@ def service_status():
     data['API']['dep'] = {}
     data['API']['dep']['db-sql'] = test_db()
     data['API']['dep']['db-nosql'] = redis_status
+    data['API']['dep']['fila'] = queue_size()
     resp = jsonify(data)
     resp.status_code = 200
     return resp
