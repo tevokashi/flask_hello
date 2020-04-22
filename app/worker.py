@@ -28,7 +28,7 @@ def enfileira(param, tipo=0):
     if tipo not in queues:
         queues[tipo] = Queue(tipo, connection=redis_conn, default_timeout=3600)
     job2 = queues[tipo].enqueue(job, param, result_ttl=2592000)
-    return job2
+    return job2.key
 
 def soma(param):
     """soma dois numeros
