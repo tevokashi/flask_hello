@@ -1,9 +1,11 @@
 """Modulo para enfileirar e execução de workers
 """
+from os import environ
 from rq import Queue
-from redis import Redis
+import redis
 
-redis_conn = Redis('10.31.120.87', '30379', db=2)
+redis_url = environ.get('REDISTOGO_URL')
+redis_conn = redis.from_url(redis_url)
 
 queues = {}
 

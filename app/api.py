@@ -1,9 +1,10 @@
 """basic flask api
 """
 from os import environ
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 import redis
+import worker
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
@@ -38,6 +39,16 @@ def test_db():
     except:
         return 'Down'
 
+def queue_size():
+    """Check rq queue status and alarm if more than 10
+
+    Returns:
+        [string] -- status da fila
+    """
+    queue_status = "OK"
+    return queue_status
+
+
 @app.route('/')
 def index():
     """Hello World
@@ -57,8 +68,13 @@ def funcname():
     Returns:
         [type] -- [description]
     """
+    valor1 = request.args.get('val1', 0)
+    valor2 = request.args.get('val2', 0)
+    tipo = request.args.get('tipo', 0)
+    param = f"{valor1},{valor2}"
     if redis_status == 'OK':
-        return f"job enqueued{redis_status}"
+        job = worker.enfileira(param, tipo)
+        return f"job enqueued{job}"
     else:
         return "Redis is down unable to enqueue your job"
 
