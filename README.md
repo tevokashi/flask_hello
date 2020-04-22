@@ -6,4 +6,4 @@
 
 To run this image use:
 
-```docker container run -p 5000:5000/tcp -d tevokashi/hello_flask:1```
+```docker container run -p 5000:5000/tcp -e SQLALCHEMY_DATABASE_URI='[database_connection_string]' -e REDISTOGO_URL='[redis_connection_string]' -d tevokashi/flask_hello```
