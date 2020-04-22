@@ -47,8 +47,8 @@ def queue_size():
         [string] -- status da fila
     """
     soma = Queue(0, connection=redis_conn, default_timeout=3600)
-    subtracao = Queue(0, connection=redis_conn, default_timeout=3600)
-    total = len(soma.count) + len(subtracao.count)
+    subtracao = Queue(1, connection=redis_conn, default_timeout=3600)
+    total = soma.count + subtracao.count
     if total >= 10:
         queue_status = "Com fila"
     else:
