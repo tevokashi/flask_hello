@@ -80,7 +80,7 @@ def funcname():
     param = f"{valor1},{valor2}"
     if redis_status == 'OK':
         job = worker.enfileira(param, tipo)
-        return f"job enqueued{job}"
+        return f"job enqueued {job}"
     else:
         return "Redis is down unable to enqueue your job"
 
