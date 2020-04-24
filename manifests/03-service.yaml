@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: test
+  name: test-app
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 5000
+    targetPort: 5000
+    nodePort: 31500
+    protocol: TCP
+  selector:
+    app: test
+  type: NodePort
+  sessionAffinity: None
+status:
+  loadBalancer: {}
