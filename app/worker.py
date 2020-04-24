@@ -1,4 +1,5 @@
 """Modulo para enfileirar e execução de workers
+teste
 """
 from os import environ
 from rq import Queue
