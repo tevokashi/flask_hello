@@ -72,7 +72,7 @@ def funcname():
         parameter_list {[type]} -- [description]
 
     Returns:
-        [type] -- [description]
+        [jobid] -- [return job id]
     """
     valor1 = request.args.get('val1', 0)
     valor2 = request.args.get('val2', 0)
