@@ -12,11 +12,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 db = SQLAlchemy(app)
 redis_url = environ.get('REDISTOGO_URL')
 
+
 try:
     redis_conn = redis.from_url(redis_url)
     redis_status = 'OK'
 except:
     redis_status = 'Down'
+
 
 @app.errorhandler(404)
 def not_found():
@@ -28,9 +30,9 @@ def not_found():
     resp.status_code = 404
     return resp
 
+
 def test_db():
     """ Check database connection
-
     Returns:
         [string] -- database status
     """
@@ -40,9 +42,9 @@ def test_db():
     except:
         return 'Down'
 
+
 def queue_size():
     """Check rq queue status and alarm if more than 10
-
     Returns:
         [string] -- status da fila
     """
@@ -55,6 +57,7 @@ def queue_size():
         queue_status = "OK"
     return queue_status
 
+
 @app.route('/')
 def index():
     """Hello World
@@ -63,6 +66,7 @@ def index():
         [string] -- Ola mundo
     """
     return "Ola mundo!"
+
 
 @app.route('/api/v1/enqueue')
 def funcname():
@@ -84,6 +88,7 @@ def funcname():
     else:
         return "Redis is down unable to enqueue your job"
 
+
 @app.route('/api/v1/status')
 def service_status():
     """Check all api deps:
@@ -102,6 +107,7 @@ def service_status():
     resp = jsonify(data)
     resp.status_code = 200
     return resp
+
 
 if __name__ == '__main__':
     app.run(debug=False)

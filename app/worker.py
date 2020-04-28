@@ -10,6 +10,7 @@ redis_conn = redis.from_url(redis_url)
 
 queues = {}
 
+
 def enfileira(param, tipo=0):
     """[summary]
 
@@ -31,6 +32,7 @@ def enfileira(param, tipo=0):
     job2 = queues[tipo].enqueue(job, param, result_ttl=2592000)
     return job2.key
 
+
 def soma(param):
     """soma dois numeros
 
@@ -42,6 +44,7 @@ def soma(param):
     """
     num1, num2 = param.split(',')
     return num1 + num2
+
 
 def subtracao(param):
     """subtrai dois numeros
