@@ -8,4 +8,3 @@ if req.get('API').get('api') == 1.0:
 else:
     print('ned rolback')
     sys.exit(4)
-
