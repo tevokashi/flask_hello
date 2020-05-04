@@ -111,3 +111,4 @@ def service_status():
 
 if __name__ == '__main__':
     app.run(debug=False)
+    print("app run")
