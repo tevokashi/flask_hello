@@ -1,4 +1,4 @@
-"""basic flask api
+"""basic flask api v1
 """
 from os import environ
 from flask import Flask, jsonify, request
