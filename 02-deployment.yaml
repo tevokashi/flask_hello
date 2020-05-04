@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: test-app
-        image: tevokashi/flask_hello
+        image: tevokashi/flask_hello:44
         imagePullPolicy: Always
         env:
         - name: SQLALCHEMY_DATABASE_URI
