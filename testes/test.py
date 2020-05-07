@@ -7,6 +7,6 @@ if float(req.get('API').get('api')) == 1.1:
     print('OK')
     print(req)
 else:
-    print('efetuando o rollback')
+    print('efetuando o rollback ?')
     print(req)
     sys.exit(4)
