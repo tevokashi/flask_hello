@@ -23,7 +23,7 @@ except:
 @app.errorhandler(404)
 def not_found():
     message = {
-        'status' : 404,
+        'status': 404,
         'message': 'Not Found'
     }
     resp = jsonify(message)

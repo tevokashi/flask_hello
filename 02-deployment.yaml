@@ -21,12 +21,7 @@ spec:
     spec:
       containers:
       - name: test-app
-        image: tevokashi/flask_hello:51
+        image: tevokashi/flask_hello:52
         imagePullPolicy: Always
-        env:
-        - name: SQLALCHEMY_DATABASE_URI
-          value: 'mysql+pymysql://root:J3nifer@45.62.252.173/db_name'
-        - name: REDISTOGO_URL
-          value: 'redis://45.62.252.173:6379'
         ports:
         - containerPort: 5000
