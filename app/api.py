@@ -99,7 +99,7 @@ def service_status():
     """
     data = {}
     data['API'] = {}
-    data['API']['api'] = "1.1"
+    data['API']['api'] = "1.2"
     data['API']['dep'] = {}
     data['API']['dep']['db-sql'] = test_db()
     data['API']['dep']['db-nosql'] = redis_status

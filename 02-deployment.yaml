@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: test-app
-        image: tevokashi/flask_hello:52
+        image: tevokashi/flask_hello:54
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
